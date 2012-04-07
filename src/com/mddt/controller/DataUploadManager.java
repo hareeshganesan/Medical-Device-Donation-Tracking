@@ -19,18 +19,17 @@ import com.mddt.model.MachineDBHelper;
 
 public class DataUploadManager {
 
-
 	MachineDBHelper mdbHelp;
 	SQLiteDatabase db;
-	
-	public DataUploadManager(Context context){
+
+	public DataUploadManager(Context context) {
 		mdbHelp = new MachineDBHelper(context);
 	}
+
 	public void uploadMachine(Machine m, String uri) {
 
 		InputStream is = null;
-		
-		
+
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(uri);
@@ -38,6 +37,7 @@ public class DataUploadManager {
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
+		
 			Log.d("HTTP", "HTTP: OK");
 		} catch (Exception e) {
 			Log.e("HTTP", "Error in http connection " + e.toString());
@@ -45,22 +45,22 @@ public class DataUploadManager {
 
 	}
 
-	public void storeMachineLocally(Machine m){
+	public void storeMachineLocally(Machine m) {
 		Log.d("before_store", "hello");
 		db = mdbHelp.getWritableDatabase();
 		Log.d("after_store", "hello again");
-		
+
 		ContentValues values = new ContentValues();
 		values.clear();
-		
+
 		values.put(MachineDBHelper.C_ID, m.lookupKey(MachineDBHelper.C_ID));
 		values.put("created_at", m.lookupKey("created_at"));
 		values.put("device_name", m.lookupKey("device_name"));
 		values.put("make", m.lookupKey("make"));
 		values.put("model", m.lookupKey("model"));
-		
+
 		db.insertOrThrow(MachineDBHelper.TABLE, null, values);
 		db.close();
 	}
-	
+
 }

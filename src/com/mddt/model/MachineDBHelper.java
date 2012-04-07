@@ -15,19 +15,23 @@ public class MachineDBHelper extends SQLiteOpenHelper {
 	public static final String TABLE = "test";
 	public static final String C_ID = BaseColumns._ID;
 	Context context;
-	
-	public MachineDBHelper(Context context){
+
+	public MachineDBHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
 		this.context = context;
 		Log.d("DbHelper", "instantiated");
 	}
-	
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		
-		String sql = "create table "+TABLE+" ("+C_ID+" text primary key, created_at text, device_name text, make text, model text)";
+
+		String sql = "create table "
+				+ TABLE
+				+ " ("
+				+ C_ID
+				+ " text primary key, created_at text, device_name text, make text, model text)";
 		db.execSQL(sql);
-		Log.d("DbHelper", "onCreated sql: "+sql );
+		Log.d("DbHelper", "onCreated sql: " + sql);
 	}
 
 	@Override

@@ -57,6 +57,15 @@
             android:layout_marginTop="66dp"
             android:text="Test" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button1"
+            android:layout_alignBottom="@+id/button1"
+            android:layout_alignParentRight="true"
+            android:text="Test2" />
+
     </RelativeLayout>
 
 </LinearLayout>

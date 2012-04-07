@@ -1,25 +1,38 @@
 package com.mddt.view;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Random;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
 import com.mddt.R;
 import com.mddt.controller.DataUploadManager;
 import com.mddt.model.Machine;
 import com.mddt.model.MachineDBHelper;
+import com.mddt.tests.DatabaseTestActivity;
+
 /**
  * @TODO monitor the times users click things, put it into the log
  * @author Hareesh
- *
+ * 
  */
 public class MDDTActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -32,44 +45,30 @@ public class MDDTActivity extends Activity {
 		Button viewInventoryButton = (Button) findViewById(R.id.viewInventoryButton);
 		Button pastEntriesButton = (Button) findViewById(R.id.pastEntriesButton);
 		Button testButton = (Button) findViewById(R.id.button1);
-		
+
 		OnClickListener uploadListener = new OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(),
-						UploadInterfaceActivity.class);
-
-				Toast theToast = Toast.makeText(getBaseContext(), "Cameerraaa",
-						Toast.LENGTH_LONG);
-				theToast.show();
-				v.getContext().startActivity(i);
+				startActivity(v, UploadInterfaceActivity.class, "moved to upload");
 			}
 		};
 
 		OnClickListener inventoryListener = new OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(),
-						InventoryViewActivity.class);
-
-				Toast theToast = Toast.makeText(getBaseContext(), "Inventorieeeee",
-						Toast.LENGTH_LONG);
-				theToast.show();
-				v.getContext().startActivity(i);
+				startActivity(v, InventoryViewActivity.class, "inventory view");
 			}
 		};
 
 		OnClickListener pastEntriesListener = new OnClickListener() {
 			public void onClick(View v) {
-				TextView text = ((TextView) findViewById(R.id.textView1));
-				text.setText("pastEntries");
+				Toast theToast = Toast.makeText(getBaseContext(),
+						"this feature is not yet implemented", Toast.LENGTH_LONG);
+				theToast.show();
 			}
 		};
-		
+
 		OnClickListener testListener = new OnClickListener() {
 			public void onClick(View v) {
-				test();
-				Toast theToast = Toast.makeText(getBaseContext(), "testing 123",
-						Toast.LENGTH_LONG);
-				theToast.show();
+				startActivity(v, DatabaseTestActivity.class, "database test");
 			}
 		};
 
@@ -78,8 +77,19 @@ public class MDDTActivity extends Activity {
 		pastEntriesButton.setOnClickListener(pastEntriesListener);
 		testButton.setOnClickListener(testListener);
 	}
-	
-	public void test(){
+
+	private void startActivity(View v, Class activity, String toast) {
+		Intent i = new Intent(v.getContext(), activity);
+
+		if (toast != null) {
+			Toast theToast = Toast.makeText(getBaseContext(), toast,
+					Toast.LENGTH_LONG);
+			theToast.show();
+		}
+		v.getContext().startActivity(i);
+	}
+
+	public void test() {
 		DataUploadManager d = new DataUploadManager(this);
 		HashMap<String, String> props = new HashMap<String, String>();
 		props.put(MachineDBHelper.C_ID, "2");
@@ -88,7 +98,5 @@ public class MDDTActivity extends Activity {
 		props.put("make", "duke");
 		props.put("model", "2012");
 		d.storeMachineLocally(new Machine("test", props));
-		//System.out.println("hello");
 	}
 }
-

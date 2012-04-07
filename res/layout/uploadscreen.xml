@@ -19,7 +19,7 @@
             android:id="@+id/camerabutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Camera" />
+            android:text="Scan Image" />
 
         <Button
             android:id="@+id/manualbutton"

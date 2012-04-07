@@ -1,62 +1,72 @@
 package com.mddt.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
 import com.mddt.R;
+import com.mddt.crop.CropActivity;
 
 public class UploadInterfaceActivity extends Activity {
 
-	public static final int MEDIA_TYPE_IMAGE = 1;
-	public static final int MEDIA_TYPE_VIDEO = 2;
-	private static final int CAMERA_REQUEST = 1888;
-	private ImageView imageView;
+	private void startActivity(View v, Class activity, String toast) {
+		Intent i = new Intent(v.getContext(), activity);
+
+		if (toast != null) {
+			Toast theToast = Toast.makeText(getBaseContext(), toast,
+					Toast.LENGTH_LONG);
+			theToast.show();
+		}
+		v.getContext().startActivity(i);
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.uploadscreen);
 
-		imageView = (ImageView) findViewById(R.id.imageView1);
-		OnClickListener cameraListener = new OnClickListener() {
-			public void onClick(View v) {
-				Intent cameraIntent = new Intent(
-						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(cameraIntent, CAMERA_REQUEST);
-			}
-		};
-
 		Button cameraButton = (Button) findViewById(R.id.camerabutton);
 		Button manualButton = (Button) findViewById(R.id.manualbutton);
 
+		OnClickListener cameraListener = new OnClickListener() {
+			public void onClick(View v) {
+				startActivity(v, CropActivity.class, "crop image");
+			}
+		};
+
 		OnClickListener manualListener = new OnClickListener() {
 			public void onClick(View v) {
-				Intent i = new Intent(v.getContext(),
-						MachineCheckActivity.class);
-
-				Toast theToast = Toast.makeText(getBaseContext(), "Machinez",
-						Toast.LENGTH_LONG);
-				theToast.show();
-				v.getContext().startActivity(i);
+				startActivity(v, MachineCheckActivity.class,
+						"move to manual entry");
 			}
 		};
 
 		manualButton.setOnClickListener(manualListener);
 		cameraButton.setOnClickListener(cameraListener);
-	}
-
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == CAMERA_REQUEST) {
-			Bitmap photo = (Bitmap) data.getExtras().get("data");
-			imageView.setImageBitmap(photo);
-		}
-
 	}
 
 }
