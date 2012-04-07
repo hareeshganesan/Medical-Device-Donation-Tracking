@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
@@ -23,6 +24,11 @@ public class Machine {
 	public Machine(String id, HashMap<String, String> properties) {
 		myProperties = properties;
 		myId = id;
+	}
+	
+	public Machine(HashMap<String, String> properties) {
+		myProperties = properties;
+		myId = UUID.randomUUID().toString();
 	}
 
 	public ArrayList<String> getKeys() {
