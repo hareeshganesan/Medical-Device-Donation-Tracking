@@ -21,8 +21,8 @@ public class DatabaseTestActivity extends Activity {
 		props.put("device_name", "helloworld");
 		props.put("make", "duke");
 		props.put("model", "2012");
-		d.uploadMachine(new Machine("test", props), "http://mddt262.appspot.com/storeavalue");
-		Toast theToast = Toast.makeText(getBaseContext(), "done uploading",
+		d.storeMachineLocally(new Machine("test", props));
+		Toast theToast = Toast.makeText(getBaseContext(), d.getMachine("_id","test").toString(),
 				Toast.LENGTH_LONG);
 		theToast.show();
 	}

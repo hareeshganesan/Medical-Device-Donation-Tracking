@@ -1,71 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout2"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_margin="100px" >
+
+    <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agency Name: "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout1"
+        <EditText
+            android:id="@+id/agencyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="46dp"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/uploadButton"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="73dp"
-                android:text="Upload Machines" />
-
-            <Button
-                android:id="@+id/viewInventoryButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View Hospital Inventory" />
-
-            <Button
-                android:id="@+id/pastEntriesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Past Entries" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1"
-            android:layout_centerHorizontal="true"
-            android:text="TextView" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
-            android:layout_marginTop="66dp"
-            android:text="Test" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button1"
-            android:layout_alignBottom="@+id/button1"
             android:layout_alignParentRight="true"
-            android:text="Test2" />
+            android:layout_toRightOf="@id/textView2" >
 
-    </RelativeLayout>
+            <requestFocus />
+        </EditText>
+    
+    
+    <Button
+        android:id="@+id/uploadButton"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/agencyName"
+        android:text="Upload Machines" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/viewInventoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Hospital Inventory"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/uploadButton" />
+
+    <Button
+        android:id="@+id/pastEntriesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Past Entries"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/viewInventoryButton" />
+
+    <Button
+        android:id="@+id/sendEmailButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Request"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/pastEntriesButton" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sendEmailButton"
+        android:text="Test" />
+
+     <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sendEmailButton"
+        android:layout_toRightOf="@id/button1"
+        android:text="Test 2" />
+    
+    
+</RelativeLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <LinearLayout 
+    android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+	    <ImageButton
+	        android:id="@+id/imageButton1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@android:drawable/ic_menu_revert" />
+	
+	
+	    <TextView
+	        android:id="@+id/emailaddress"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="To: "
+	        android:textStyle="bold" >
+	    </TextView>
+	   
+	
+	    <EditText
+	        android:id="@+id/address"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="email address"
+	        android:inputType="textEmailAddress"
+	        android:width="250dip" >
+	    </EditText>
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Subject: "
+	        android:textStyle="bold" >
+	    </TextView>
+	
+	    <EditText
+	        android:id="@+id/subject"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:hint="Subject"
+	        android:width="250dip" >
+	    </EditText>
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Message: "
+	        android:textStyle="bold" >
+	    </TextView>
+	
+	    <EditText
+	        android:id="@+id/body"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="top"
+	        android:hint="Compose Message"
+	        android:inputType="textMultiLine"
+	        android:lines="5" >
+
+	    </EditText>
+	
+	    <Button
+	        android:id="@+id/send"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Send Email"
+	        android:width="150dip" >
+	    </Button>
+
+	</LinearLayout>
+</ScrollView>

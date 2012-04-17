@@ -36,6 +36,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import android.widget.ImageView;
 
+/**
+ * This activity manages the cropping of the image, starting from the selection
+ * and acquisition of an image, and finishing by outputting actual text
+ * 
+ * @author Hareesh
+ * 
+ */
 public class CropActivity extends Activity {
 	private Uri mImageCaptureUri;
 	private ImageView mImageView;
@@ -47,7 +54,6 @@ public class CropActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.crop);
 
 		final String[] items = new String[] { "Take from camera",
@@ -61,33 +67,12 @@ public class CropActivity extends Activity {
 			public void onClick(DialogInterface dialog, int item) { // pick from
 																	// camera
 				if (item == 0) {
-					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-					mImageCaptureUri = Uri.fromFile(new File(Environment
-							.getExternalStorageDirectory(), "tmp_avatar_"
-							+ String.valueOf(System.currentTimeMillis())
-							+ ".jpg"));
-
-					intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
-							mImageCaptureUri);
-
-					try {
-						intent.putExtra("return-data", true);
-
-						startActivityForResult(intent, PICK_FROM_CAMERA);
-					} catch (ActivityNotFoundException e) {
-						e.printStackTrace();
-					}
+					takePicture();
 				} else { // pick from file
-					Intent intent = new Intent();
-
-					intent.setType("image/*");
-					intent.setAction(Intent.ACTION_GET_CONTENT);
-
-					startActivityForResult(Intent.createChooser(intent,
-							"Complete action using"), PICK_FROM_FILE);
+					getPicture();
 				}
 			}
+
 		});
 
 		final AlertDialog dialog = builder.create();
@@ -102,23 +87,39 @@ public class CropActivity extends Activity {
 		});
 	}
 
-	private void toTesseract(Bitmap photo2) {
-		// Bitmap photo = null;
-		// try{
-		// Log.d("exception",Boolean.toString(fileUri==null));
-		// InputStream input =
-		// this.getContentResolver().openInputStream(fileUri);
-		// BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-		// bitmapOptions.inPreferredConfig=Bitmap.Config.ARGB_8888;//optional
-		// input = this.getContentResolver().openInputStream(fileUri);
-		// photo = BitmapFactory.decodeStream(input, null, bitmapOptions);
-		// input.close();
-		// }catch(FileNotFoundException e){
-		// Log.d("exception", "file not found");
-		// }catch(IOException e){
-		// Log.d("exception", "io exception");
-		//
-		// }
+	private void getPicture() {
+		Intent intent = new Intent();
+
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+
+		startActivityForResult(
+				Intent.createChooser(intent, "Complete action using"),
+				PICK_FROM_FILE);
+	}
+
+	private void takePicture() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		mImageCaptureUri = Uri.fromFile(new File(Environment
+				.getExternalStorageDirectory(), "tmp_avatar_"
+				+ String.valueOf(System.currentTimeMillis()) + ".jpg"));
+		Log.d("image capture", "beginning");
+		intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+				mImageCaptureUri);
+
+		try {
+			intent.putExtra("return-data", true);
+
+			Log.d("image capture", "about to select from camera");
+			startActivityForResult(intent, PICK_FROM_CAMERA);
+		} catch (ActivityNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void toTesseract(Bitmap photo) {
+
 		Log.d("tesseract", "entered");
 		File myDir = new File("/mnt/sdcard/tesseract");
 
@@ -127,7 +128,7 @@ public class CropActivity extends Activity {
 												// "/tessdata/eng.traineddata"
 												// must be present
 
-		baseApi.setImage(photo2);
+		baseApi.setImage(photo);
 
 		String recognizedText = baseApi.getUTF8Text(); // Log or otherwise
 														// display this
@@ -137,45 +138,33 @@ public class CropActivity extends Activity {
 		Toast theToast = Toast.makeText(getBaseContext(), recognizedText,
 				Toast.LENGTH_LONG);
 		theToast.show();
-
-		// theToast = Toast.makeText(getBaseContext(),
-		// "We recognized this: "+recognizedText,
-		// Toast.LENGTH_LONG);
-		// theToast.show();
-		// Log.d("thetext", recognizedText);
-		// imageView.setImageBitmap(photo), msg)
-		// photo.recycle();
-		// File file = new File(fileUri.getPath());
-		// Log.d("file", file.getAbsolutePath());
-		//
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode != RESULT_OK)
+		if (resultCode != RESULT_OK) {
+			Log.d("activity result", "fail boat");
 			return;
+		}
 
 		switch (requestCode) {
 		case PICK_FROM_CAMERA:
+			Log.d("activity result", "pick from cam");
 			doCrop();
-
 			break;
 
 		case PICK_FROM_FILE:
+			Log.d("activity result", "pick from file");
 			mImageCaptureUri = data.getData();
-
 			doCrop();
-
 			break;
 
 		case CROP_FROM_CAMERA:
+			Log.d("activity result", "crop from cam");
 			Bundle extras = data.getExtras();
-
 			if (extras != null) {
 				Bitmap photo = extras.getParcelable("data");
-
 				mImageView.setImageBitmap(photo);
-
 				toTesseract(photo);
 			}
 
@@ -203,7 +192,6 @@ public class CropActivity extends Activity {
 		if (size == 0) {
 			Toast.makeText(this, "Can not find image crop app",
 					Toast.LENGTH_SHORT).show();
-
 			return;
 		} else {
 			intent.setData(mImageCaptureUri);
@@ -216,6 +204,7 @@ public class CropActivity extends Activity {
 				i.setComponent(new ComponentName(res.activityInfo.packageName,
 						res.activityInfo.name));
 
+				Log.d("activity result", "start crop from cam");
 				startActivityForResult(i, CROP_FROM_CAMERA);
 			} else {
 				for (ResolveInfo res : list) {

@@ -3,4 +3,20 @@
 
     <string name="hello">Hello World, MDDTActivity!</string>
     <string name="app_name">MDDT</string>
+    
+    <string-array name="dept_array">
+        <item>Anesthesia</item>
+        <item>Cardiology</item>
+        <item>Emergency</item>
+        <item>ENT</item>
+        <item>Gynecology</item>
+        <item>Laboratory</item>
+        <item>Maternity</item>
+        <item>Maternity</item>
+        <item>Neurology</item>
+        <item>Ophthalmology</item>
+        <item>Patient Room</item>
+        <item>Radiology</item>
+        <item>Surgery</item>
+    </string-array>
 </resources>

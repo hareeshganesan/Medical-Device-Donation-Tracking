@@ -41,6 +41,10 @@
             android:label="@string/app_name"
             android:name=".tests.DatabaseTestActivity" >
         </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".view.SendEmailActivity" >
+        </activity>
     </application>
 
 </manifest>

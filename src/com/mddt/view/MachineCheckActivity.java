@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.mddt.R;
 import com.mddt.controller.DataUploadManager;
-import com.mddt.crop.CropActivity;
 import com.mddt.model.Machine;
 
 public class MachineCheckActivity extends Activity {

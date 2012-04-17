@@ -9,12 +9,27 @@ import java.util.UUID;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.util.Log;
 
 public class Machine {
 
 	HashMap<String, String> myProperties;
 	String myId;
+	static public final int RANDOM = 1;
+
+	public Machine(int specialCase) {
+		switch (specialCase) {
+		case RANDOM:
+			myId = UUID.randomUUID().toString().substring(0,5);
+			myProperties = new HashMap<String, String>();
+			myProperties.put("info",
+					UUID.randomUUID().toString().substring(0, 5));
+			break;
+		}
+
+	}
 
 	public Machine(String id) {
 		myProperties = new HashMap<String, String>();
@@ -25,10 +40,16 @@ public class Machine {
 		myProperties = properties;
 		myId = id;
 	}
-	
+
 	public Machine(HashMap<String, String> properties) {
 		myProperties = properties;
 		myId = UUID.randomUUID().toString();
+	}
+
+	public Machine(Cursor query) {
+		myId = query.getString(0);
+		myProperties = new HashMap<String, String>();
+		myProperties.put("info", query.getString(1));
 	}
 
 	public ArrayList<String> getKeys() {
@@ -53,22 +74,26 @@ public class Machine {
 		try {
 			return new UrlEncodedFormEntity(nameValuePairs);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public UrlEncodedFormEntity testJSON() {
-		ArrayList<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("tag", "hello"));
-		nameValuePairs.add(new BasicNameValuePair("value", "world"));
-		try {
-			return new UrlEncodedFormEntity(nameValuePairs);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public ContentValues formatDBValues() {
+		ContentValues values = new ContentValues();
+		values.clear();
+
+		values.put(MachineDBHelper.C_ID, myId);
+		values.put("info", toString());
+		return values;
 	}
+
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		for (String key : myProperties.keySet())
+			builder.append(key + " : " + myProperties.get(key) + ";;");
+		return builder.toString();
+
+	}
+
 }

@@ -1,0 +1,16 @@
+README
+
+
+Features to be implemented:
+	Database
+		Establishing a local datastore
+			r
+			w
+		establishing a consistent structure between local and remote
+		displaying local
+		downloading and storing remote
+	UI
+		display view
+	Obtaining manuals
+		set up a data steal
+		
