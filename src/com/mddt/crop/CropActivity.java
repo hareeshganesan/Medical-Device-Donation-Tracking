@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.mddt.R;
+import com.mddt.view.MachineCheckActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,6 +27,7 @@ import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 import android.net.Uri;
 
@@ -33,6 +36,8 @@ import android.os.Environment;
 
 import android.widget.Button;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
 
@@ -50,7 +55,9 @@ public class CropActivity extends Activity {
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int CROP_FROM_CAMERA = 2;
 	private static final int PICK_FROM_FILE = 3;
-
+	public static HashMap<Integer, String> parameterMap = new HashMap<Integer,String>();
+	private String parsedText = new String();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,16 +84,48 @@ public class CropActivity extends Activity {
 
 		final AlertDialog dialog = builder.create();
 
-		Button button = (Button) findViewById(R.id.btn_crop);
+		Button select_button = (Button) findViewById(R.id.btn_crop);
 		mImageView = (ImageView) findViewById(R.id.iv_photo);
 
-		button.setOnClickListener(new View.OnClickListener() {
+		
+
+	    Spinner spinner = (Spinner) findViewById(R.id.paramselect);
+	    ArrayAdapter<CharSequence> param_adapter = ArrayAdapter.createFromResource(
+	            this, R.array.parameter_array, android.R.layout.simple_spinner_item);
+	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    spinner.setAdapter(param_adapter);
+		Button completeMachineButton = (Button) findViewById(R.id.completemachine);
+		Button saveParamButton = (Button) findViewById(R.id.savetext);
+
+		OnClickListener saveParamListener = new OnClickListener(){
+			public void onClick(View v) {
+				updateMap();
+			}
+			
+		};
+		
+		OnClickListener completeMachineListener = new OnClickListener(){
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), MachineCheckActivity.class);
+				v.getContext().startActivity(i);
+			}
+			
+		};
+		
+		saveParamButton.setOnClickListener(saveParamListener);
+		completeMachineButton.setOnClickListener(completeMachineListener);
+		select_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				dialog.show();
 			}
 		});
 	}
 
+
+	private void updateMap(){
+		Spinner spinner = (Spinner) findViewById(R.id.paramselect);
+		CropActivity.parameterMap.put(spinner.getSelectedItemPosition(), parsedText);
+	}
 	private void getPicture() {
 		Intent intent = new Intent();
 
@@ -135,6 +174,9 @@ public class CropActivity extends Activity {
 														// string...
 		baseApi.end();
 
+		parsedText = recognizedText;
+		TextView t = (TextView)findViewById(R.id.parseText);
+		t.setText("Parsed: "+parsedText);
 		Toast theToast = Toast.makeText(getBaseContext(), recognizedText,
 				Toast.LENGTH_LONG);
 		theToast.show();

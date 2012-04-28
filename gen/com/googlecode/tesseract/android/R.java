@@ -9,7 +9,8 @@ package com.googlecode.tesseract.android;
 
 public final class R {
     public static final class array {
-        public static final int dept_array=0x7f060000;
+        public static final int dept_array=0x7f060001;
+        public static final int parameter_array=0x7f060000;
     }
     public static final class attr {
     }
@@ -62,58 +63,65 @@ public final class R {
         public static final int viewpastentriespush=0x7f020009;
     }
     public static final class id {
-        public static final int LinearLayout01=0x7f070026;
-        public static final int ScrollView1=0x7f070025;
-        public static final int address=0x7f070029;
-        public static final int agencyName=0x7f07001b;
-        public static final int body=0x7f07002b;
+        public static final int LinearLayout01=0x7f07002e;
+        public static final int ScrollView1=0x7f070027;
+        public static final int address=0x7f070031;
+        public static final int agencyName=0x7f07001f;
+        public static final int body=0x7f070033;
         public static final int btn_crop=0x7f070000;
-        public static final int button1=0x7f070020;
-        public static final int button2=0x7f070021;
-        public static final int camerabutton=0x7f070018;
-        public static final int devicename=0x7f07002d;
-        public static final int editText1=0x7f070008;
-        public static final int editText2=0x7f07000b;
-        public static final int editText3=0x7f07000e;
-        public static final int editText4=0x7f070011;
-        public static final int emailaddress=0x7f070028;
-        public static final int imageButton1=0x7f070027;
-        public static final int imageView1=0x7f070033;
-        public static final int info=0x7f070024;
-        public static final int iv_icon=0x7f070002;
+        public static final int button1=0x7f070024;
+        public static final int button2=0x7f070025;
+        public static final int camerabutton=0x7f07001c;
+        public static final int completemachine=0x7f070006;
+        public static final int devicename=0x7f070035;
+        public static final int editText1=0x7f07000c;
+        public static final int editText2=0x7f07000f;
+        public static final int editText3=0x7f070012;
+        public static final int editText4=0x7f070015;
+        public static final int emailaddress=0x7f070030;
+        public static final int imageButton1=0x7f07002f;
+        public static final int imageView1=0x7f07003a;
+        public static final int info=0x7f07002d;
+        public static final int iv_icon=0x7f070007;
         public static final int iv_photo=0x7f070001;
-        public static final int linearLayout1=0x7f070006;
-        public static final int linearLayout2=0x7f070009;
-        public static final int linearLayout3=0x7f07000c;
-        public static final int linearLayout4=0x7f07000f;
-        public static final int listView1=0x7f070004;
-        public static final int location=0x7f070031;
-        public static final int machine_id=0x7f070023;
-        public static final int make=0x7f07002e;
-        public static final int manualbutton=0x7f070019;
-        public static final int model=0x7f07002f;
-        public static final int pastEntriesButton=0x7f07001e;
-        public static final int progressBar1=0x7f07001a;
-        public static final int relativeLayout1=0x7f070022;
-        public static final int send=0x7f07002c;
-        public static final int sendButton=0x7f070032;
-        public static final int sendEmailButton=0x7f07001f;
-        public static final int subject=0x7f07002a;
-        public static final int tableLayout1=0x7f070013;
-        public static final int tableRow1=0x7f070014;
-        public static final int tableRow2=0x7f070015;
-        public static final int tableRow3=0x7f070016;
-        public static final int tableRow4=0x7f070017;
-        public static final int tag=0x7f070030;
-        public static final int textView1=0x7f070005;
-        public static final int textView2=0x7f070007;
-        public static final int textView3=0x7f07000a;
-        public static final int textView4=0x7f07000d;
-        public static final int textView5=0x7f070010;
-        public static final int textView6=0x7f070012;
-        public static final int tv_name=0x7f070003;
-        public static final int uploadButton=0x7f07001c;
-        public static final int viewInventoryButton=0x7f07001d;
+        public static final int linearLayout1=0x7f070004;
+        public static final int linearLayout2=0x7f07000d;
+        public static final int linearLayout3=0x7f070010;
+        public static final int linearLayout4=0x7f070013;
+        public static final int listView1=0x7f070009;
+        public static final int location=0x7f070039;
+        public static final int machine_id=0x7f07002c;
+        public static final int make=0x7f070036;
+        public static final int manualbutton=0x7f07001d;
+        public static final int model=0x7f070037;
+        public static final int parameter=0x7f07002a;
+        public static final int paramlist=0x7f070029;
+        public static final int paramselect=0x7f070003;
+        public static final int paramval=0x7f07002b;
+        public static final int parseText=0x7f070002;
+        public static final int pastEntriesButton=0x7f070022;
+        public static final int progressBar1=0x7f07001e;
+        public static final int relativeLayout1=0x7f070026;
+        public static final int savetext=0x7f070005;
+        public static final int send=0x7f070034;
+        public static final int sendButton=0x7f070028;
+        public static final int sendEmailButton=0x7f070023;
+        public static final int subject=0x7f070032;
+        public static final int tableLayout1=0x7f070017;
+        public static final int tableRow1=0x7f070018;
+        public static final int tableRow2=0x7f070019;
+        public static final int tableRow3=0x7f07001a;
+        public static final int tableRow4=0x7f07001b;
+        public static final int tag=0x7f070038;
+        public static final int textView1=0x7f07000a;
+        public static final int textView2=0x7f07000b;
+        public static final int textView3=0x7f07000e;
+        public static final int textView4=0x7f070011;
+        public static final int textView5=0x7f070014;
+        public static final int textView6=0x7f070016;
+        public static final int tv_name=0x7f070008;
+        public static final int uploadButton=0x7f070020;
+        public static final int viewInventoryButton=0x7f070021;
     }
     public static final class layout {
         public static final int crop=0x7f030000;
@@ -129,13 +137,14 @@ public final class R {
         public static final int main=0x7f03000a;
         public static final int main2=0x7f03000b;
         public static final int manual_entry=0x7f03000c;
-        public static final int row=0x7f03000d;
-        public static final int send_request=0x7f03000e;
-        public static final int send_request2=0x7f03000f;
-        public static final int test=0x7f030010;
-        public static final int textentry=0x7f030011;
-        public static final int tutorial=0x7f030012;
-        public static final int uploadscreen=0x7f030013;
+        public static final int paramrow=0x7f03000d;
+        public static final int row=0x7f03000e;
+        public static final int send_request=0x7f03000f;
+        public static final int send_request2=0x7f030010;
+        public static final int test=0x7f030011;
+        public static final int textentry=0x7f030012;
+        public static final int tutorial=0x7f030013;
+        public static final int uploadscreen=0x7f030014;
     }
     public static final class string {
         public static final int app_name=0x7f050001;

@@ -36,5 +36,36 @@
 		android:layout_gravity="center_horizontal"
 		android:layout_width="fill_parent" 		 
 		android:layout_height="200dp"/>
+
+	<TextView
+	    android:id="@+id/parseText"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:text="Parsed: " />
+
+	<Spinner
+	    android:id="@+id/paramselect"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" />
+
+	<LinearLayout
+	    android:id="@+id/linearLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+		<Button
+		    android:id="@+id/savetext"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Save Text" />
+
+		<Button
+		    android:id="@+id/completemachine"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Complete Machine" />
+
+	</LinearLayout>
 		
 </LinearLayout>
