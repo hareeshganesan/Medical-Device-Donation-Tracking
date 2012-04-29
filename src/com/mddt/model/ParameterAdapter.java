@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.EditText;
+
 
 public class ParameterAdapter extends ArrayAdapter<String[]>{
 	
@@ -33,7 +35,8 @@ public class ParameterAdapter extends ArrayAdapter<String[]>{
         String[] data = items.get(position);
         ((TextView) layoutView.findViewById(R.id.parameter)).setText(data[0]);
         ((TextView) layoutView.findViewById(R.id.paramval)).setText(data[1]);
-        
+        if(data[0].equals("Location"))
+        	((TextView) layoutView.findViewById(R.id.paramval)).setKeyListener(null);
         return layoutView;
     }
 

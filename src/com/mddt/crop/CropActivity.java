@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.mddt.R;
+import com.mddt.view.MDDTActivity;
 import com.mddt.view.MachineCheckActivity;
 
 import android.app.Activity;
@@ -106,8 +108,14 @@ public class CropActivity extends Activity {
 		
 		OnClickListener completeMachineListener = new OnClickListener(){
 			public void onClick(View v) {
+				String[] params = getResources()
+						.getStringArray(R.array.parameter_array);
+				int location_id = (new ArrayList<String>(Arrays.asList(params))).indexOf("Location");
+				Log.d("location", location_id+" "+params[4]);
+				CropActivity.parameterMap.put(location_id, MDDTActivity.myLocation);
 				Intent i = new Intent(v.getContext(), MachineCheckActivity.class);
 				v.getContext().startActivity(i);
+				
 			}
 			
 		};

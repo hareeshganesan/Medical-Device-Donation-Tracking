@@ -3,27 +3,33 @@ package com.mddt.tests;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.mddt.R;
-import com.mddt.controller.DataUploadManager;
-import com.mddt.model.Machine;
+import com.mddt.controller.MyLocation;
+import com.mddt.controller.MyLocation.LocationResult;
 
 public class DatabaseTestActivity extends Activity {
 
+	String location = "nothing";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test);
 
-		DataUploadManager d = new DataUploadManager(this);
-		HashMap<String, String> props = new HashMap<String, String>();
-		props.put("device_name", "helloworld");
-		props.put("make", "duke");
-		props.put("model", "2012");
-		d.storeMachineLocally(new Machine("test", props));
-		Toast theToast = Toast.makeText(getBaseContext(), d.getMachine("_id","test").toString(),
-				Toast.LENGTH_LONG);
-		theToast.show();
+		LocationResult locationResult = new LocationResult(){
+		    @Override
+		    public void gotLocation(Location location){
+		        //Got the location!
+		    	Toast theToast = Toast.makeText(getBaseContext(), ""+location.getLatitude()+" "+location.getLongitude(),
+						Toast.LENGTH_LONG);
+				theToast.show();
+		    }
+		};
+		MyLocation myLocation = new MyLocation();
+		String location = "unavailable";
+		myLocation.getLocation(this, locationResult);
+		
 	}
 }
