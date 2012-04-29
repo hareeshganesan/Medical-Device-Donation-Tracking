@@ -21,13 +21,14 @@ import com.mddt.R;
 import com.mddt.controller.DataUploadManager;
 import com.mddt.crop.CropActivity;
 import com.mddt.model.Machine;
+import com.mddt.model.ParameterAdapter;
 
 public class MachineCheckActivity extends Activity {
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.manual_entry);
-		
+
 		Button sendButton = (Button) findViewById(R.id.sendButton);
 
 		OnClickListener sendListener = new OnClickListener() {
@@ -39,50 +40,55 @@ public class MachineCheckActivity extends Activity {
 		sendButton.setOnClickListener(sendListener);
 		populateListView();
 	}
-//http://vikaskanani.wordpress.com/2011/07/27/android-focusable-edittext-inside-listview/
-	private void populateListView() {
-		String[] params = getResources().getStringArray(R.array.parameter_array);
-		ListView l = (ListView) findViewById(R.id.paramlist);
-		
-		l.setAdapter(new ArrayAdapter<String>(this, R.layout.paramrow,R.id.parameter, params));
 
-		for(int i=0; i<params.length; i++){
-			
-			Log.d("listcount",Integer.toString(l.getCount()));
-			
-			LinearLayout layout = ((LinearLayout)((LinearLayout)l.getAdapter().getView(i, null, null)).getChildAt(0));
-			if(CropActivity.parameterMap.containsKey(i)){
-				Log.d("paramlist", Integer.toString(i));
-				TextView tv = (TextView)layout.findViewById(R.id.parameter);
-				Log.d("paramname", tv.getText().toString());
-				EditText e = (EditText) layout.findViewById(R.id.paramval);
-				Log.d("newval",CropActivity.parameterMap.get(i));
-				tv.setText(CropActivity.parameterMap.get(i));
+	protected void onStart() {
+		super.onStart();
+		populateListView();
+	}
+
+	private void populateListView() {
+		String[] params = getResources()
+				.getStringArray(R.array.parameter_array);
+		
+		ArrayList<String[]> paramList = new ArrayList<String[]>();
+		for (int i = 0; i < params.length; i++) {
+			String[] data = new String[2];
+			data[0] = params[i];
+			if (CropActivity.parameterMap.containsKey(i)) {
+				data[1] = CropActivity.parameterMap.get(i);
+			} else {
+				data[1] = "";
 			}
+			paramList.add(data);
 		}
+		
+		ListView l = (ListView) findViewById(R.id.paramlist);
+
+		l.setAdapter(new ParameterAdapter(this, R.layout.paramrow, paramList));
 
 	}
 
-	public void extractAndUploadMachine() {
-		EditText name = (EditText) findViewById(R.id.devicename);
-		EditText make = (EditText) findViewById(R.id.make);
-		EditText model = (EditText) findViewById(R.id.model);
-		EditText tag = (EditText) findViewById(R.id.tag);
-		EditText location = (EditText) findViewById(R.id.location);
+	private void extractAndUploadMachine() {
+		String[] params = getResources()
+				.getStringArray(R.array.parameter_array);
+		ListView l = (ListView) findViewById(R.id.paramlist);
 		HashMap<String, String> props = new HashMap<String, String>();
-		props.put("device_name", name.getText().toString());
-		props.put("make", make.getText().toString());
-		props.put("model", model.getText().toString());
-		props.put("tag", tag.getText().toString());
-		props.put("location", location.getText().toString());
 
+		for (int i = 0; i < params.length; i++) {
+			String text = ((EditText) ((LinearLayout) l.getChildAt(i))
+					.findViewById(R.id.paramval)).getText().toString();
+			props.put(params[i], text);
+		}
 		DataUploadManager d = new DataUploadManager(this);
+		Machine m = new Machine(props);
+		d.storeMachineLocally(m);
+		d.uploadMachine(m,
+		 "http://mddt262.appspot.com/storeavalue");
 
-		d.uploadMachine(new Machine(props),
-				"http://mddt262.appspot.com/storeavalue");
 		Toast theToast = Toast.makeText(getBaseContext(), "done uploading",
 				Toast.LENGTH_LONG);
 		theToast.show();
+
 	}
 
 }
