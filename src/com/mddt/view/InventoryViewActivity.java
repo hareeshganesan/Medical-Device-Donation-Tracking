@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.mddt.R;
-import com.mddt.controller.DataUploadManager;
+import com.mddt.controller.MachineDataManager;
 import com.mddt.model.MachineDBHelper;
 
 public class InventoryViewActivity extends Activity {
@@ -19,6 +19,7 @@ public class InventoryViewActivity extends Activity {
 	Cursor cursor;
 	ListView list;
 	SimpleCursorAdapter adapter;
+	
 	static final String[] FROM = {
 		MachineDBHelper.C_ID, "info"
 	};

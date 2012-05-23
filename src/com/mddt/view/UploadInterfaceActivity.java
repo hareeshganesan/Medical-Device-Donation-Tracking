@@ -11,19 +11,9 @@ import android.widget.Toast;
 import com.mddt.R;
 import com.mddt.crop.CropActivity;
 
-public class UploadInterfaceActivity extends Activity {
+public class UploadInterfaceActivity extends TransitioningActivity {
 
-	private void startActivity(View v, Class activity, String toast) {
-		Intent i = new Intent(v.getContext(), activity);
-
-		if (toast != null) {
-			Toast theToast = Toast.makeText(getBaseContext(), toast,
-					Toast.LENGTH_LONG);
-			theToast.show();
-		}
-		v.getContext().startActivity(i);
-	}
-
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.uploadscreen);

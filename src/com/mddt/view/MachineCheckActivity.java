@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mddt.R;
-import com.mddt.controller.DataUploadManager;
+import com.mddt.controller.MachineDataManager;
+import com.mddt.controller.RemoteUploadManager;
+import com.mddt.controller.UploadManagerProxy;
 import com.mddt.crop.CropActivity;
 import com.mddt.model.Machine;
 import com.mddt.model.ParameterAdapter;
@@ -61,7 +63,7 @@ public class MachineCheckActivity extends Activity {
 			}
 			paramList.add(data);
 		}
-		
+		CropActivity.parameterMap.clear();
 		ListView l = (ListView) findViewById(R.id.paramlist);
 
 		l.setAdapter(new ParameterAdapter(this, R.layout.paramrow, paramList));
@@ -79,10 +81,10 @@ public class MachineCheckActivity extends Activity {
 					.findViewById(R.id.paramval)).getText().toString();
 			props.put(params[i], text);
 		}
-		DataUploadManager d = new DataUploadManager(this);
+		RemoteUploadManager p = new UploadManagerProxy(this);
 		Machine m = new Machine(props);
-		d.storeMachineLocally(m);
-		d.uploadMachine(m,
+		p.storeMachineLocally(m);
+		p.uploadMachine(m,
 		 "http://mddt262.appspot.com/storeavalue");
 
 		Toast theToast = Toast.makeText(getBaseContext(), "done uploading",
